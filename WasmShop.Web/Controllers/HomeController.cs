@@ -1,10 +1,13 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WasmShop.Data.Repositories;
+using WasmShop.Model.Models;
 using WasmShop.Service;
+using WasmShop.Web.Models;
 
 namespace WasmShop.Web.Controllers
 {
@@ -26,7 +29,8 @@ namespace WasmShop.Web.Controllers
         [ChildActionOnly]
         public ActionResult Header()
         {
-            var viewModel = _productCategoryService.GetAll();
+            var productCategories = _productCategoryService.GetAll();
+            var viewModel = Mapper.Map<IEnumerable<ProductCategoryViewModel>>(productCategories);
             return PartialView(viewModel);
         }
     }

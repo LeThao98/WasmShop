@@ -1,5 +1,4 @@
-﻿@using WasmShop.Model.Models;
-@model IEnumerable<ProductCategory>
+﻿@model IEnumerable<ProductCategoryViewModel>
 
 <div class="header">
     <!-- container -->
@@ -7,21 +6,14 @@
         <!-- header-top -->
         <div class="header-top">
             <div class="header-logo">
-                <a href="index.html"><img src="~/Assets/client/images/logo.png" alt="" /></a>
+                <a href="@Url.Action(" Index","Home")"><img src="~/Assets/client/images/logo.png" alt="" /></a>
             </div>
             <div class="header-right">
                 <ul>
                     <li class="phone">+371 282 20 760</li>
                     <li class="mail"><a href="mailto:example@mail.com">eony321v@gmail.com</a></li>
                     <li class="checkout">
-                        <a href="add-to-cart.html">
-                            <span class="cart">$ 99.54</span>
-                            <span class="check">Checkout</span>
-                        </a>
-                        <div class="shopping">
-                            <h5>Your Shopping Cart is empty.</h5>
-                            <p>Give it purpose—fill it with books, movies, mobiles, cameras, toys and fashion jewellery.</p>
-                        </div>
+                        @Html.Action("SummaryCart", "Cart")
                     </li>
                 </ul>
             </div>
@@ -32,44 +24,23 @@
             <span class="menu"><img src="~/Assets/client/images/menu.png" alt=""></span>
             <ul class="nav">
                 <li class="dropdown1">
-                    <a href="index.html">HOME</a>
+                    @Html.ActionLink("Home", "Index", "Home")
                 </li>
-                <li class="dropdown1">
-                    <a href="men.html">MEN</a>
-                    <ul class="dropdown2">
-                        @foreach (var item in Model)
-                        {
-                            if (item.ParentID == 1)
+                @foreach (var parentCategory in Model.Where(m => m.ParentID == null))
+                {
+                    <li class="dropdown1">
+                        <a href="javascript:void(0)">@parentCategory.Name</a>
+                        <ul class="dropdown2">
+                            @foreach (var childCategory in Model.Where(p => p.ParentID == parentCategory.ID))
                             {
-                                <li><a href="@(item.Alias).html">@item.Name</a></li>
+                                if (childCategory.ParentID == 1)
+                                {
+                                    <li>@Html.ActionLink(childCategory.Name, "List", "Product", new { category = childCategory.Alias }, null)</li>
+                                }
                             }
-                        }
-                    </ul>
-                </li>
-                <li class="dropdown1">
-                    <a href="women.html">WOMEN</a>
-                    <ul class="dropdown2">
-                        @foreach (var item in Model)
-                        {
-                            if (item.ParentID == 2)
-                            {
-                                <li><a href="@(item.Alias).html">@item.Name</a></li>
-                            }
-                        }
-                    </ul>
-                </li>
-                <li class="dropdown1">
-                    <a href="women.html">KIDS</a>
-                    <ul class="dropdown2">
-                        @foreach (var item in Model)
-                        {
-                            if (item.ParentID == 3)
-                            {
-                                <li><a href="@(item.Alias).html">@item.Name</a></li>
-                            }
-                        }
-                    </ul>
-                </li>
+                        </ul>
+                    </li>
+                }
                 <li class="dropdown1">
                     <a href="men.html">SALE</a>
                     <ul class="dropdown2">

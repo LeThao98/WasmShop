@@ -36,10 +36,10 @@ namespace WasmShop.Test.UrlRouting
 
         private bool TestIncomingRouteResult(RouteData routeData, string controller, string action, object propertySet = null)
         {
-            Func<object, object, bool> valCompare = (v1, v2) =>
-              {
-                  return StringComparer.InvariantCultureIgnoreCase.Compare(v1, v2) == 0;
-              };
+            bool valCompare(object v1, object v2)
+            {
+                return StringComparer.InvariantCultureIgnoreCase.Compare(v1, v2) == 0;
+            }
 
             bool result = valCompare(routeData.Values["controller"], controller) && valCompare(routeData.Values["action"], action);
 
@@ -48,7 +48,6 @@ namespace WasmShop.Test.UrlRouting
                 PropertyInfo[] propInfo = propertySet.GetType().GetProperties();
                 foreach (PropertyInfo pi in propInfo)
                 {
-                    var x = pi.GetValue(propertySet, null);
                     if (!(routeData.Values.ContainsKey(pi.Name) && valCompare(routeData.Values[pi.Name], pi.GetValue(propertySet, null))))
                     {
                         result = false;
@@ -89,6 +88,7 @@ namespace WasmShop.Test.UrlRouting
         public void TestIncomingRoutes()
         {
             TestRouteMatch("~/san-pham/quan-nam", "Product", "Index", new { category = "quan-nam" });
+            TestRouteMatch("~/Home/Index", "Home", "Index");
         }
     }
 }

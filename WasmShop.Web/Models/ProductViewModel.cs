@@ -1,31 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using WasmShop.Model.Abstracts;
 
-namespace WasmShop.Model.Models
+namespace WasmShop.Web.Models
 {
-    [Table("Products")]
-    public class Product : Auditable
+    public class ProductViewModel
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
-        [Required]
         public string Name { get; set; }
 
-        [Required]
         public string Alias { get; set; }
 
         public int CategoryID { get; set; }
         public string Image { get; set; }
 
-        [Column(TypeName = "XML")]
         public string MoreImages { get; set; }
 
         public decimal Price { get; set; }
@@ -37,12 +25,9 @@ namespace WasmShop.Model.Models
         public bool? HomeFlag { get; set; }
         public bool? HotFlag { get; set; }
         public int? ViewCount { get; set; }
-
         public string Tags { get; set; }
+        public virtual ProductCategoryViewModel ProductCategory { get; set; }
 
-        [ForeignKey("CategoryID")]
-        public virtual ProductCategory ProductCategory { get; set; }
-
-        public virtual IEnumerable<ProductTag> ProductTags { get; set; }
+        public virtual IEnumerable<ProductTagViewModel> ProductTags { get; set; }
     }
 }

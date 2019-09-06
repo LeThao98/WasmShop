@@ -1,0 +1,91 @@
+﻿@using WasmShop.Web.Models
+@model IEnumerable<ProductViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!-- men -->
+<div class="men">
+    <!-- container -->
+    <div class="container">
+        <div class="col-md-9 fashions">
+            <div class="title">
+                <h3>TOPS - TITLE</h3>
+            </div>
+            <div class="fashion-section">
+                @for (int i = 0; i < 3; i++)
+                {
+                    string className = i == 0 ? "fashion-grid1" : "fashion-grid2";
+                    <div class="@className">
+
+                        @foreach (var product in @Model.Skip(4 * i).Take(4))
+                        {
+                            <div class="col-md-3 fashion-grid">
+                                <a href="single.html">
+                                    <img src="~/Assets/client/images/m4.jpg" alt="" />
+                                    <div class="product">
+                                        <h3>@product.Name</h3>
+                                        @{
+                                            int price = (int)product.Price;
+                                            <p><span></span> @String.Format("{0:#,### VNĐ}", price)</p>
+                                        }
+                                    </div>
+                                </a>
+                                <div class="fashion-view">
+                                    <span></span>
+                                    <div class="clearfix"></div>
+                                    <h4><a href="@Url.Action("Detail",new {alias = product.Alias })">Quick View</a></h4>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="clearfix"></div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-md-3 side-bar">
+            <div class="categories">
+                <h3>CATEGORIES</h3>
+                <ul>
+                    <li><a href="#">accessories</a></li>
+                    <li><a href="#">basics</a></li>
+                    <li><a href="#">jackets</a></li>
+                    <li><a href="#">jeans</a></li>
+                    <li><a href="#">knits</a></li>
+                    <li><a href="#">overalls</a></li>
+                    <li><a href="#">over coats</a></li>
+                    <li><a href="#">shoes</a></li>
+                    <li><a href="#">sweatshirts</a></li>
+                    <li><a href="#">trousers</a></li>
+                    <li><a href="#"><del>tops</del></a></li>
+                    <li><a href="#">watersuits</a></li>
+                </ul>
+            </div>
+            <div class="sales">
+                <h3>SALE</h3>
+                <div class="pricing">
+                    <h4>Price range</h4>
+                    <input type="text" placeholder="price from" required />
+                    <input type="text" placeholder="price to" required />
+                    <div class="clearfix"></div>
+                </div>
+                <div class="size">
+                    <h4>Size</h4>
+                    <ul>
+                        <li><a href="#">XS</a></li>
+                        <li><a href="#">S</a></li>
+                        <li><a href="#">M</a></li>
+                        <li><a href="#">L</a></li>
+                        <li><a href="#">XL</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix"> </div>
+    </div>
+    <!-- //container -->
+</div>
+<!-- //men -->

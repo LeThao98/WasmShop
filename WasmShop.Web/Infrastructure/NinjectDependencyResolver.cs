@@ -33,13 +33,18 @@ namespace WasmShop.Web.Infrastructure
         {
             kernel.Bind<IDbFactory>().To<DbFactory>();
 
+            kernel.Bind(x => x.FromAssembliesMatching("WasmShop.Data.dll")
+                    .SelectAllClasses()
+                    .Where(t => t.Name.Contains("Repository"))
+                    .BindAllInterfaces()
+            );
             kernel.Bind(x => x.FromAssembliesMatching("WasmShop.Service.dll")
                     .SelectAllClasses()
                     .BindAllInterfaces()
             );
 
             //kernel.Bind<IProductCategoryService>().To<ProductCategoryService>();
-            kernel.Bind<IProductCategoryRepository>().To<ProductCategoryRepository>();
+            //kernel.Bind<IProductCategoryRepository>().To<ProductCategoryRepository>();
         }
     }
 }

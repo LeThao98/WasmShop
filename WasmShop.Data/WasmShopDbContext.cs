@@ -16,9 +16,11 @@ namespace WasmShop.Data
         }
 
         public DbSet<Product> Products { get; set; }
-        public DbSet<ProductCategory> ProductCategory { get; set; }
+        public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<ProductTag> ProductTags { get; set; }
-        public DbSet<Tag> Tag { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<Size> Sizes { get; set; }
+        public DbSet<ProductSize> ProductSizes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

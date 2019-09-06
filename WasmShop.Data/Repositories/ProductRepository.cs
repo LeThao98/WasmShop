@@ -3,7 +3,7 @@ using WasmShop.Model.Models;
 
 namespace WasmShop.Data.Repositories
 {
-    public interface IProductRepository
+    public interface IProductRepository : IRepository<Product>
     {
     }
 

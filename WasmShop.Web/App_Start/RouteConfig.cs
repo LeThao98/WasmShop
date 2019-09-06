@@ -14,9 +14,28 @@ namespace WasmShop.Web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "san-pham",
+                url: "san-pham/{category}",
+                defaults: new { controller = "Product", action = "List", category = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "chi-tiet-gio-hang",
+                url: "gio-hang/chi-tiet",
+                defaults: new { controller = "Cart", action = "CheckOut" }
+            );
+
+            routes.MapRoute(
+                name: "chi-tiet-san-pham",
+                url: "san-pham/chi-tiet/{alias}",
+                defaults: new { controller = "Product", action = "Detail", alias = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                namespaces: new[] { "WasmShop.Web.Controllers" }
             );
         }
     }
