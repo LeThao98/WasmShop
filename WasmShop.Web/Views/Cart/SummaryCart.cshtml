@@ -1,26 +1,32 @@
 ﻿@model CartViewModel
 
-<a href="@Url.Action("CheckOut","Cart")">
+<a href="@Url.Action("Index","Cart")">
     <span class="cart">@String.Format("{0:#,###}", Model.Total) VNĐ</span>
     <span class="check">Checkout</span>
 </a>
 <div class="shopping">
-    @*<h5>Your Shopping Cart is empty.</h5>
-        <p>Give it purpose—fill it with books, movies, mobiles, cameras, toys and fashion jewellery.</p>*@
-    @foreach (var item in Model.Cart.cartLines)
+    @if (Model.Cart.cartLines.Count() == 0)
     {
-        <span class="item">
-            <span class="item-left">
-                <img src="~/Assets/client/images/m3.jpg" alt="" width="60" height="80" />
-                <span class="item-info">
-                    <span style="word-break: break-word;">@item.Quantity x @item.Product.Name</span>
-                    <span>Size: @item.Size.Name</span>
-                    <span>@String.Format("{0:#,###}", item.Product.Price) VNĐ</span>
+        <h5>Your Shopping Cart is empty.</h5>
+        <p>Give it purpose—fill it with books, movies, mobiles, cameras, toys and fashion jewellery.</p>
+    }
+    else
+    {
+        foreach (var item in Model.Cart.cartLines)
+        {
+            <span class="item">
+                <span class="item-left">
+                    <img src="~/Assets/client/images/m3.jpg" alt="" width="60" height="80" />
+                    <span class="item-info">
+                        <span style="word-break: break-word;">@item.Quantity x @item.Product.Name</span>
+                        <span>Size: @item.Size.Name</span>
+                        <span>@String.Format("{0:#,###}", item.Product.Price) VNĐ</span>
+                    </span>
+                </span>
+                <span class="item-right">
+                    <button class="btn btn-xs btn-danger pull-right" onclick="window.location.href = '@Url.Action("DeleteItem", "Cart", new { productId = item.Product.ID, sizeId = item.Size.Id, returnUrl = Request.RawUrl })';">X</button>
                 </span>
             </span>
-            <span class="item-right">
-                <button class="btn btn-xs btn-danger pull-right">x</button>
-            </span>
-        </span>
+        }
     }
 </div>

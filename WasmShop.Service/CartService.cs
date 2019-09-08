@@ -8,6 +8,10 @@ namespace WasmShop.Service
     public interface ICartService
     {
         void AddItem(Cart cart, Product product, int sizeId, int quantity);
+
+        void RemoveItem(Cart cart, int productId, int sizeId);
+
+        void Clear(Cart cart);
     }
 
     public class CartService : ICartService
@@ -38,6 +42,17 @@ namespace WasmShop.Service
             {
                 line.Quantity += quantity;
             }
+        }
+
+        public void Clear(Cart cart)
+        {
+            cart.cartLines.Clear();
+        }
+
+        public void RemoveItem(Cart cart, int productId, int sizeId)
+        {
+            CartLine line = cart.cartLines.Where(cl => cl.Product.ID == productId && cl.Size.Id == sizeId).FirstOrDefault();
+            cart.cartLines.Remove(line);
         }
     }
 

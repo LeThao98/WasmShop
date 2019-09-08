@@ -352,3 +352,12 @@
     <!-- //container -->
 </div>
 <!-- //sign-up -->
+
+@if (TempData["Success"] != null)
+{
+    <script type="text/javascript">
+    $(window).on('load', function () {
+        alert('@TempData["Success"].ToString()');
+        });
+    </script>
+}
