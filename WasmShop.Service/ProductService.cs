@@ -19,6 +19,8 @@ namespace WasmShop.Service
         Product GetProductById(int id);
 
         IEnumerable<Size> GetProductSizesByProductId(int productId);
+
+        IEnumerable<Product> GetListProductByCategoryIdPaging(string category, int page, int pageSize, string sort, out int totalRow);
     }
 
     public class ProductService : IProductService
@@ -34,6 +36,17 @@ namespace WasmShop.Service
             this._productCategoryRepository = productCategoryRepository;
             this._sizeRepository = sizeRepository;
             this._unitOfWork = unitOfWork;
+        }
+
+        public IEnumerable<Product> GetListProductByCategoryIdPaging(string category, int page, int pageSize, string sort, out int totalRow)
+        {
+            var query = _productRepository.GetMulti(x => x.ProductCategory.Alias == category);
+            switch (sort)
+            {
+                default: break;
+            }
+            totalRow = query.Count();
+            return query.Skip((page - 1) * pageSize).Take(pageSize);
         }
 
         public Product GetProductByAlias(string alias)

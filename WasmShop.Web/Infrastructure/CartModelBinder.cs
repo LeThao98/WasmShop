@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using WasmShop.Common;
 using WasmShop.Service;
 using WasmShop.Web.Models;
 
@@ -6,8 +7,6 @@ namespace WasmShop.Web.Infrastructure
 {
     public class CartModelBinder : IModelBinder
     {
-        private const string sessionKey = "Cart";
-
         public object BindModel(ControllerContext controllerContext,
  ModelBindingContext bindingContext)
         {
@@ -16,7 +15,7 @@ namespace WasmShop.Web.Infrastructure
 
             if (controllerContext.HttpContext.Session != null)
             {
-                cart = (CartViewModel)controllerContext.HttpContext.Session[sessionKey];
+                cart = (CartViewModel)controllerContext.HttpContext.Session[CommonConstants.SessionCart];
             }
             // create the Cart if there wasn't one in the session data
             if (cart == null)
@@ -24,7 +23,7 @@ namespace WasmShop.Web.Infrastructure
                 cart = new CartViewModel();
                 if (controllerContext.HttpContext.Session != null)
                 {
-                    controllerContext.HttpContext.Session[sessionKey] = cart;
+                    controllerContext.HttpContext.Session[CommonConstants.SessionCart] = cart;
                 }
             }
             // return the cart

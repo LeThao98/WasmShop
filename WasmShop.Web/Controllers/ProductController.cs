@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WasmShop.Service;
+using WasmShop.Web.Infrastructure;
 using WasmShop.Web.Models;
 
 namespace WasmShop.Web.Controllers
@@ -19,11 +20,23 @@ namespace WasmShop.Web.Controllers
         }
 
         // GET: Product
-        public ActionResult List()
+        public ActionResult List(int page = 1)
         {
+            var pageSize = int.Parse(Common.ConfigHelper.GetByKey("pageSize"));
+            var maxPage = int.Parse(Common.ConfigHelper.GetByKey("maxPage"));
             var category = RouteData.Values["category"].ToString();
-            var productList = _productService.GetProductsByCategory(category);
-            var viewModel = Mapper.Map<IEnumerable<ProductViewModel>>(productList);
+            var productList = _productService.GetListProductByCategoryIdPaging(category, page, pageSize, null, out int totalRow);
+            int totalPage = (int)Math.Ceiling((double)totalRow / pageSize);
+            var productListViewModel = Mapper.Map<IEnumerable<ProductViewModel>>(productList);
+            var viewModel = new PaginationSet<ProductViewModel>()
+            {
+                Page = page,
+                Count = pageSize,
+                TotalPages = totalPage,
+                TotalCount = totalPage,
+                MaxPage = maxPage,
+                Items = productListViewModel
+            };
             return View(viewModel);
         }
 

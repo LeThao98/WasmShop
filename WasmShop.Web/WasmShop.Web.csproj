@@ -214,6 +214,8 @@
     <Content Include="Assets\client\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Assets\client\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Assets\client\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="connectionStrings.config" />
+    <Content Include="appSettings.config" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -230,6 +232,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\PaginationSet.cs" />
     <Compile Include="Models\CartViewModel.cs" />
     <Compile Include="Models\ProductCategoryViewModel.cs" />
     <Compile Include="Models\ProductDetailViewModel.cs" />
@@ -272,6 +275,10 @@
     <Folder Include="Assets\admin\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WasmShop.Common\WasmShop.Common.csproj">
+      <Project>{D96E3D9C-B99A-48DA-9FEB-FA57AEB3FDD5}</Project>
+      <Name>WasmShop.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WasmShop.Data\WasmShop.Data.csproj">
       <Project>{41D3C23B-5DF0-419E-AB62-BC955BB51C60}</Project>
       <Name>WasmShop.Data</Name>
